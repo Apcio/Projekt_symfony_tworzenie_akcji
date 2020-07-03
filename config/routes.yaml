@@ -1,3 +1,28 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+myActionHomePage:
+    path: /
+    controller: App\Controller\MyActionsController::index
+    methods: GET
+
+myActionHomePageShow:
+    path: /{id}
+    controller: App\Controller\MyActionsController::show
+    requirements:
+        id: '\d+'
+    methods: GET
+
+myActionHomePageRemove:
+    path: /
+    controller: App\Controller\MyActionsController::remove
+    methods: POST
+
+myActionHomePageCreate:
+    path: /new
+    controller: App\Controller\MyActionsController::create
+    methods: GET|POST
+
+myActionHomePageUpdate:
+    path: /update/{id}
+    controller: App\Controller\MyActionsController::update
+    requirements:
+        id: '\d+'
+    methods: GET|POST

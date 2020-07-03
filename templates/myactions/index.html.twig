@@ -1,0 +1,51 @@
+{% extends 'main.html.twig' %}
+
+{% block content %}
+<div>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="location.href='{{ path("myActionHomePageCreate") }}'">Dodaj nową akcję</button>
+    </div>
+    <ul>
+        {% for action in data %}
+            <li>
+                <h5>{{ action.title }}</h5>
+                <h5>Data utworzenia: {{ action.created_at|date("Y-m-d H:i:s") }}</h5>
+                <input class="btn btn-primary" type="button" value="Pokaż akcję" onclick='location.href="{{ path("myActionHomePageShow", { "id": action.id }) }}"'>
+                <input class="btn btn-primary" type="button" value="Edytuj akcję" onclick='location.href="{{ path("myActionHomePageUpdate", { "id": action.id }) }}"'>
+                <input class="btn btn-danger" type="button" value="Usuń akcję" onclick='removeAction("{{ path("myActionHomePageRemove", { "id": action.id }) }}", this)'>
+                <hr>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block jsScripts %}
+<script>
+    function removeAction(route, sender) {
+        let rem = confirm("Czy usunąć wybraną akcję?");
+        if(rem == true) {
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4) {
+                    if(this.status == 200) {
+                        sender.parentNode.remove();
+                        //alert('Pozycja została usunięta');
+                        addFlash('success', 'Pozycja została usunięta');
+                        removeFlashes();
+                    } else {
+                        // alert('Nie udało się usunąć pozycji');
+                        addFlash('danger', 'Nie udało się usunąć pozycji');
+                        removeFlashes();
+                    }
+                }
+            }
+
+            xhttp.open("POST", route, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send();
+        }
+    }
+</script>
+{% endblock %}

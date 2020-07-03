@@ -1,0 +1,16 @@
+{% extends 'main.html.twig' %}
+
+{% block content %}
+<div>
+    <input class="btn btn-primary mb-5" type="button" value="Powrót" onclick='location.href="{{ path("myActionHomePage") }}"'
+    <br>
+    <h5>{{ data.title|e }}</h5>
+    <hr>
+    <p>{{ data.description|e }}</p>
+    <br>
+    <p>
+        Akcja utworzona: <b>{{ data.created_at|date("Y-m-d H:i:s") }}</b><br>
+        Akcja zmodyfikowana: <b>{{ data.updated_at|date("Y-m-d H:i:s") }}</b>
+    </p>
+</div>
+{% endblock %}
